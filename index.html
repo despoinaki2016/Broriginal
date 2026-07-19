@@ -172,3 +172,858 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRORIGINAL | ACS Asset Hub</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f12;
+            --panel-bg: #12181d;
+            --neon-green: #00ff66;
+            --text-main: #e2e8f0;
+            --text-muted: #64748b;
+            --border-color: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: var(--neon-green);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+        }
+
+        header p {
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        /* --- SELLERS SECTION --- */
+        .section-title {
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 3px solid var(--neon-green);
+            padding-left: 10px;
+        }
+
+        .sellers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .seller-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .seller-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: #1e293b;
+            border: 2px solid var(--neon-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--neon-green);
+        }
+
+        .seller-info h3 {
+            font-size: 1rem;
+        }
+
+        .seller-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- PRODUCTS GRID (Ready for your items) --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--neon-green);
+        }
+
+        .product-img-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background-color: #1a232c;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .product-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: #white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .product-img-container:hover .img-overlay {
+            opacity: 1;
+        }
+
+        .product-details {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .price {
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        /* --- IMAGE DISPLAY MODULE (MODAL) --- */
+        .image-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .viewer-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80vh;
+        }
+
+        .viewer-content img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            border-radius: 4px;
+            border: 2px solid var(--border-color);
+        }
+
+        .viewer-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .viewer-caption {
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>BRORIGINAL</h1>
+            <p>Premium Verification & Advanced Combat System Assets</p>
+        </header>
+
+        <!-- SELLERS REGISTRY -->
+        <h2 class="section-title">Verified Sellers</h2>
+        <div class="sellers-grid">
+            <div class="seller-card">
+                <div class="seller-avatar">GZ</div>
+                <div class="seller-info">
+                    <h3>@georgezachari</h3>
+                    <p>Lead ACS Engine Animator</p>
+                </div>
+            </div>
+            <!-- Add more sellers here easily -->
+        </div>
+
+        <!-- ASSET STORES -->
+        <h2 class="section-title">Available Systems</h2>
+        <div class="products-grid">
+            
+            <!-- Sample Product 1 -->
+            <div class="product-card">
+                <div class="product-img-container" onclick="openViewer(this)">
+                    <!-- Replace src with your Roblox engine screenshot link later -->
+                    <img src="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?w=500" alt="ACS Custom Weapon System Layout">
+                    <div class="img-overlay">🔍 CLICK TO VIEW SCREENSHOT</div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">Custom ACS M4A1 Engine Config</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Clean animations, custom recoil curves, and tuned break-action speed.</p>
+                    <div class="product-meta">
+                        <span class="price">400 Robux</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MAIN IMAGE DISPLAY COMPONENT -->
+    <div id="mainImageViewer" class="image-viewer" onclick="closeViewer()">
+        <div class="viewer-content" onclick="event.stopPropagation()">
+            <button class="viewer-close" onclick="closeViewer()">&times;</button>
+            <img id="viewerImage" src="" alt="Preview Expansion">
+            <div id="viewerCaption" class="viewer-caption"></div>
+        </div>
+    </div>
+
+    <script>
+        function openViewer(element) {
+            const img = element.querySelector('img');
+            const title = element.nextElementSibling.querySelector('.product-title').innerText;
+            
+            document.getElementById('viewerImage').src = img.src;
+            document.getElementById('viewerCaption').innerText = title;
+            document.getElementById('mainImageViewer').style.display = 'flex';
+        }
+
+        function closeViewer() {
+            document.getElementById('mainImageViewer').style.display = 'none';
+        }
+
+        // Close modal if user hits Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeViewer();
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRORIGINAL | ACS Asset Hub</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f12;
+            --panel-bg: #12181d;
+            --acs-blue: #0088ff;
+            --text-main: #e2e8f0;
+            --text-muted: #64748b;
+            --border-color: #1e293b;
+            --success-green: #00cc66;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- NAVBAR (Λογότυπο & Αναζήτηση) --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--acs-blue);
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(0, 136, 255, 0.3);
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 500px;
+        }
+
+        .search-bar {
+            width: 100%;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 15px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--acs-blue);
+        }
+
+        /* --- ΤΙΤΛΟΙ ΕΝΟΤΗΤΩΝ --- */
+        .section-title {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 3px solid var(--acs-blue);
+            padding-left: 10px;
+        }
+
+        /* --- ΠΩΛΗΤΕΣ --- */
+        .sellers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .seller-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .seller-avatar {
+            width: 45px;
+            height: 45px;
+            background-color: #1e293b;
+            border: 2px solid var(--acs-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--acs-blue);
+        }
+
+        .seller-info h3 {
+            font-size: 0.95rem;
+        }
+
+        .seller-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* --- ΠΡΟΪΟΝΤΑ --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--acs-blue);
+        }
+
+        .product-img-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background-color: #1a232c;
+            cursor: pointer;
+        }
+
+        .product-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .product-img-container:hover .img-overlay {
+            opacity: 1;
+        }
+
+        .product-details {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            color: var(--acs-blue);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .buy-btn {
+            background-color: var(--acs-blue);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .buy-btn:hover {
+            background-color: #0066cc;
+        }
+
+        /* --- ΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ (MODAL) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            max-width: 450px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            color: var(--text-main);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--acs-blue);
+        }
+
+        .currency-select {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--success-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #00aa55;
+        }
+
+        /* --- ΔΙΕΠΑΦΗ ΠΡΟΒΟΛΗΣ ΕΙΚΟΝΩΝ --- */
+        .image-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1010;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .viewer-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80vh;
+        }
+
+        .viewer-content img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ΠΛΟΗΓΗΣΗ / NAVBAR -->
+        <nav>
+            <a href="#" class="logo">BRORIGINAL</a>
+            <div class="search-container">
+                <input type="text" class="search-bar" id="searchBar" onkeyup="filterAssets()" placeholder="Αποκτήστε πράγματα με τα χρήματά σας...">
+            </div>
+        </nav>
+
+        <!-- ΕΠΑΛΗΘΕΥΜΕΝΟΙ ΠΩΛΗΤΕΣ -->
+        <h2 class="section-title">Επαληθευμένοι Πωλητές</h2>
+        <div class="sellers-grid">
+            <div class="seller-card">
+                <div class="seller-avatar">GZ</div>
+                <div class="seller-info">
+                    <h3>@georgezachari</h3>
+                    <p>Lead ACS Engine Animator</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ΔΙΑΘΕΣΙΜΑ ACS ASSETS -->
+        <h2 class="section-title">Διαθέσιμα Συστήματα (ACS)</h2>
+        <div class="products-grid" id="productsGrid">
+            
+            <!-- Asset 1 -->
+            <div class="product-card">
+                <div class="product-img-container" onclick="openViewer(this)">
+                    <img src="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?w=500" alt="ACS M4A1 Setup">
+                    <div class="img-overlay">🔍 ΠΡΟΒΟΛΗ ΕΙΚΟΝΑΣ</div>
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h3 class="product-title">Προσαρμοσμένο ACS M4A1</h3>
+                        <p class="product-desc">Πλήρεις ρυθμίσεις κίνησης, ρεαλιστική ανάκρουση και βελτιστοποιημένο UI για μάχες.</p>
+                    </div>
+                    <div class="product-meta">
+                        <span class="price" data-base-price="5">5.00 €</span>
+                        <button class="buy-btn" onclick="openCheckout('Προσαρμοσμένο ACS M4A1', 5)">Αγορά</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asset 2 -->
+            <div class="product-card">
+                <div class="product-img-container" onclick="openViewer(this)">
+                    <img src="https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=500" alt="Glock 17 Tactical">
+                    <div class="img-overlay">🔍 ΠΡΟΒΟΛΗ ΕΙΚΟΝΑΣ</div>
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h3 class="product-title">Glock 17 Tactical Set</h3>
+                        <p class="product-desc">Περιλαμβάνει custom animations γεμιστήρα και tactical laser σκόπευση.</p>
+                    </div>
+                    <div class="product-meta">
+                        <span class="price" data-base-price="3.50">3.50 €</span>
+                        <button class="buy-btn" onclick="openCheckout('Glock 17 Tactical Set', 3.50)">Αγορά</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ΦΟΡΜΑ ΠΛΗΡΩΜΗΣ (CHECKOUT MODAL) -->
+    <div id="checkoutModal" class="modal" onclick="closeCheckout()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeCheckout()">&times;</button>
+            <h3 class="modal-title" id="modalItemTitle">Ολοκλήρωση Αγοράς</h3>
+            
+            <label style="font-size: 0.85rem; color: var(--text-muted);">Επιλέξτε Νόμισμα Πληρωμής:</label>
+            <select class="currency-select" id="currencySelect" onchange="convertCurrency()">
+                <option value="EUR">EUR (€) - Ευρώ</option>
+                <option value="USD">USD ($) - Δολάριο Αμερικής</option>
+                <option value="ROBUX">Robux (R$) - Roblox Currency</option>
+            </select>
+
+            <form id="paymentForm" onsubmit="handlePayment(event)">
+                <div class="form-group">
+                    <label>Όνομα Κατόχου Κάρτας</label>
+                    <input type="text" class="form-control" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Αριθμός Κάρτας</label>
+                    <input type="text" class="form-control" maxlength="16" required placeholder="4000 1234 5678 9010">
+                </div>
+                <div class="form-row" style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Λήξη (MM/YY)</label>
+                        <input type="text" class="form-control" maxlength="5" required placeholder="12/28">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>CVV</label>
+                        <input type="text" class="form-control" maxlength="3" required placeholder="123">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Roblox Username (για την παράδοση του Asset)</label>
+                    <input type="text" class="form-control" required placeholder="π.χ. GeorgeZachari">
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">Πληρωμή <span id="modalPrice">0.00 €</span></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ΠΡΟΒΟΛΗ ΕΙΚΟΝΩΝ -->
+    <div id="imageViewer" class="image-viewer" onclick="closeViewer()">
+        <div class="viewer-content">
+            <img id="viewerImage" src="" alt="Preview">
+        </div>
+    </div>
+
+    <script>
+        let currentItemPriceEUR = 0;
+
+        // Αναζήτηση Φίλτρου
+        function filterAssets() {
+            const input = document.getElementById('searchBar').value.toLowerCase();
+            const cards = document.getElementsByClassName('product-card');
+            
+            for (let i = 0; i < cards.length; i++) {
+                const title = cards[i].querySelector('.product-title').innerText.toLowerCase();
+                const desc = cards[i].querySelector('.product-desc').innerText.toLowerCase();
+                if (title.includes(input) || desc.includes(input)) {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        // Άνοιγμα Φόρμας Πληρωμής
+        function openCheckout(itemName, priceEUR) {
+            currentItemPriceEUR = priceEUR;
+            document.getElementById('modalItemTitle').innerText = itemName;
+            document.getElementById('currencySelect').value = "EUR";
+            updateModalPriceDisplay(priceEUR, "EUR");
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        // Μετατροπή Νομισμάτων (EUR, USD, ROBUX)
+        function convertCurrency() {
+            const currency = document.getElementById('currencySelect').value;
+            let convertedPrice = currentItemPriceEUR;
+            
+            if (currency === "USD") {
+                convertedPrice = (currentItemPriceEUR * 1.08).toFixed(2); // Τρέχουσα ισοτιμία δολαρίου
+            } else if (currency === "ROBUX") {
+                convertedPrice = Math.round(currentItemPriceEUR * 80); // Υπολογισμός σε Robux
+            } else {
+                convertedPrice = currentItemPriceEUR.toFixed(2);
+            }
+            
+            updateModalPriceDisplay(convertedPrice, currency);
+        }
+
+        function updateModalPriceDisplay(price, currency) {
+            const btnSpan = document.getElementById('modalPrice');
+            if (currency === "EUR") btnSpan.innerText = price + " €";
+            else if (currency === "USD") btnSpan.innerText = "$" + price;
+            else if (currency === "ROBUX") btnSpan.innerText = price + " R$";
+        }
+
+        // Εκτέλεση Πληρωμής
+        function handlePayment(e) {
+            e.preventDefault();
+            alert("Η επεξεργασία της κάρτας ξεκίνησε! Το ACS Asset θα αποσταλεί στο Roblox account σας μόλις ολοκληρωθεί ο έλεγχος.");
+            closeCheckout();
+        }
+
+        // Viewer Εικόνων
+        function openViewer(element) {
+            const img = element.querySelector('img');
+            document.getElementById('viewerImage').src = img.src;
+            document.getElementById('imageViewer').style.display = 'flex';
+        }
+
+        function closeViewer() {
+            document.getElementById('imageViewer').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCheckout();
+                closeViewer();
+            }
+        });
+    </script>
+</body>
+</html>
