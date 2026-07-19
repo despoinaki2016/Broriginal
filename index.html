@@ -1564,3 +1564,533 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRORIGINAL | ACS Asset Hub</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f12;
+            --panel-bg: #12181d;
+            --acs-blue: #0088ff;
+            --text-main: #e2e8f0;
+            --text-muted: #64748b;
+            --border-color: #1e293b;
+            --success-green: #00cc66;
+            --alert-red: #ff3333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--acs-blue);
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(0, 136, 255, 0.3);
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 500px;
+        }
+
+        .search-bar {
+            width: 100%;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 15px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--acs-blue);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 3px solid var(--acs-blue);
+            padding-left: 10px;
+        }
+
+        /* --- ΠΩΛΗΤΕΣ --- */
+        .sellers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .seller-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .seller-avatar {
+            width: 45px;
+            height: 45px;
+            background-color: #1e293b;
+            border: 2px solid var(--acs-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--acs-blue);
+        }
+
+        .seller-info h3 {
+            font-size: 0.95rem;
+        }
+
+        .seller-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* --- ΠΡΟΪΟΝΤΑ --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-img-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background-color: #1a232c;
+            cursor: pointer;
+        }
+
+        .product-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            color: var(--acs-blue);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .buy-btn {
+            background-color: var(--acs-blue);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- LIVE ΠΑΡΑΓΓΕΛΙΕΣ & DEADLINES --- */
+        .orders-list {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .deadline-timer {
+            color: var(--alert-red);
+            font-weight: bold;
+            font-size: 0.9rem;
+            background: rgba(255, 51, 51, 0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 51, 51, 0.2);
+        }
+
+        /* --- MODAL CHECKOUT --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            max-width: 450px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            color: var(--text-main);
+        }
+
+        .currency-select {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--success-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- NAVBAR -->
+        <nav>
+            <a href="#" class="logo">BRORIGINAL</a>
+            <div class="search-container">
+                <input type="text" class="search-bar" id="searchBar" onkeyup="filterAssets()" placeholder="Αποκτήστε πράγματα με τα χρήματά σας...">
+            </div>
+        </nav>
+
+        <!-- VERIFIED SELLERS -->
+        <h2 class="section-title">Επαληθευμένοι Πωλητές</h2>
+        <div class="sellers-grid" id="sellersGrid">
+            <div class="seller-card" id="seller-gz">
+                <div class="seller-avatar">GZ</div>
+                <div class="seller-info">
+                    <h3>@georgezachari</h3>
+                    <p>Lead ACS Engine Configurator</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <h2 class="section-title">Διαθέσιμα Συστήματα (ACS)</h2>
+        <div class="products-grid" id="productsGrid">
+            
+            <div class="product-card">
+                <div class="product-img-container">
+                    <img src="https://images.unsplash.com/photo-1614680376593-902f74fa0d41?w=500" alt="ACS Config">
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h3 class="product-title">Custom ACS Heavy Rifle Config</h3>
+                        <p class="product-desc">Σύστημα ρεαλιστικής ανάκρουσης, custom UI και εξελιγμένο σύστημα σκόπευσης.</p>
+                    </div>
+                    <div class="product-meta">
+                        <span class="price" data-base-price="10">10.00 €</span>
+                        <button class="buy-btn" onclick="openCheckout('Custom ACS Heavy Rifle Config', 10, '@georgezachari')">Αγορά</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LIVE ORDERS TRACKING & BAN TIMER -->
+        <h2 class="section-title">Παρακολούθηση Παραδόσεων & Προθεσμίες</h2>
+        <div class="orders-list">
+            <p id="noOrders" style="color: var(--text-muted); font-size: 0.9rem;">Δεν υπάρχουν εκκρεμείς παραδόσεις αυτή τη στιγμή.</p>
+            <div id="ordersContainer"></div>
+        </div>
+    </div>
+
+    <!-- MODAL CHECKOUT -->
+    <div id="checkoutModal" class="modal" onclick="closeCheckout()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeCheckout()">&times;</button>
+            <h3 style="margin-bottom: 20px;" id="modalItemTitle">Ολοκλήρωση Αγοράς</h3>
+            
+            <label style="font-size: 0.85rem; color: var(--text-muted);">Νόμισμα:</label>
+            <select class="currency-select" id="currencySelect" onchange="convertCurrency()">
+                <option value="EUR">EUR (€)</option>
+                <option value="USD">USD ($)</option>
+                <option value="ROBUX">Robux (R$)</option>
+            </select>
+
+            <form id="paymentForm" onsubmit="handlePayment(event)">
+                <div class="form-group">
+                    <label>Όνομα Κατόχου Κάρτας</label>
+                    <input type="text" class="form-control" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Αριθμός Κάρτας</label>
+                    <input type="text" class="form-control" maxlength="16" required placeholder="4000 1234 5678 9010">
+                </div>
+                <div class="form-row" style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Λήξη</label>
+                        <input type="text" class="form-control" placeholder="MM/YY" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>CVV</label>
+                        <input type="text" class="form-control" maxlength="3" required placeholder="123">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email Αγοραστή (για την παράδοση του αρχείου)</label>
+                    <input type="email" id="buyerEmail" class="form-control" required placeholder="name@example.com">
+                </div>
+                <button type="submit" class="submit-btn">Επιβεβαίωση & Ειδοποίηση Πωλητή (<span id="modalPrice">0.00 €</span>)</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentItem = { title: '', price: 0, seller: '' };
+        const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
+
+        function openCheckout(itemName, price, sellerName) {
+            currentItem = { title: itemName, price: price, seller: sellerName };
+            document.getElementById('modalItemTitle').innerText = itemName;
+            document.getElementById('currencySelect').value = "EUR";
+            document.getElementById('modalPrice').innerText = price.toFixed(2) + " €";
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        // Dropdown currency conversions
+        function convertCurrency() {
+            const currency = document.getElementById('currencySelect').value;
+            let p = currentItem.price;
+            if (currency === "USD") document.getElementById('modalPrice').innerText = "$" + (p * 1.08).toFixed(2);
+            else if (currency === "ROBUX") document.getElementById('modalPrice').innerText = Math.round(p * 80) + " R$";
+            else document.getElementById('modalPrice').innerText = p.toFixed(2) + " €";
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        function handlePayment(e) {
+            e.preventDefault();
+            const buyerEmail = document.getElementById('buyerEmail').value;
+            
+            const orderDate = new Date();
+            const deadlineDate = new Date();
+            deadlineDate.setDate(orderDate.getDate() + 30);
+
+            alert("Η πληρωμή εγκρίθηκε! Ο πωλητής " + currentItem.seller + " ειδοποιήθηκε. Έχει ακριβώς 1 μήνα να παραδώσει το αρχείο στο email '" + buyerEmail + "' αλλιώς θα αποκλειστεί μόνιμα.");
+            
+            sendDiscordNotification(buyerEmail, deadlineDate);
+            createNewOrderTracking(buyerEmail, deadlineDate);
+            closeCheckout();
+        }
+
+        function sendDiscordNotification(email, deadline) {
+            if(DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL_HERE") return;
+            
+            const payload = {
+                content: `🚨 **ΝΕΑ ΑΓΟΡΑ ASSET** 🚨\n**Προϊόν:** ${currentItem.title}\n**Πωλητής:** ${currentItem.seller}\n**Email Αγοραστή:** ${email}\n**Προθεσμία:** ${deadline.toLocaleDateString('el-GR')}\n⚠️ *Αν το asset δεν παραδοθεί εγκαίρως, ο πωλητής θα υποστεί PERMANENT BAN.*`
+            };
+
+            fetch(DISCORD_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(err => console.error("Webhook Error"));
+        }
+
+        function createNewOrderTracking(email, deadline) {
+            document.getElementById('noOrders').style.display = 'none';
+            const container = document.getElementById('ordersContainer');
+            
+            const orderId = 'order-' + Date.now();
+            const orderHtml = `
+                <div class="order-item" id="${orderId}">
+                    <div>
+                        <strong>Asset:</strong> ${currentItem.title} | <strong>Πωλητής:</strong> <span class="order-seller">${currentItem.seller}</span><br>
+                        <small style="color: var(--text-muted)">Αποστολή στο email: ${email}</small>
+                    </div>
+                    <div class="deadline-timer" data-deadline="${deadline.getTime()}">Υπολογισμός χρόνου...</div>
+                </div>
+            `;
+            container.innerHTML += orderHtml;
+            startCountdown();
+        }
+
+        function startCountdown() {
+            clearInterval(window.countdownInterval);
+            window.countdownInterval = setInterval(() => {
+                const timers = document.querySelectorAll('.deadline-timer');
+                timers.forEach(timer => {
+                    const deadline = parseInt(timer.getAttribute('data-deadline'));
+                    const now = new Date().getTime();
+                    const diff = deadline - now;
+
+                    if (diff <= 0) {
+                        timer.innerText = "ΛΗΞΗ ΠΡΟΘΕΣΜΙΑΣ - PERMANENT BAN";
+                        timer.style.backgroundColor = "rgba(255,0,0,0.3)";
+                        const parent = timer.closest('.order-item');
+                        const sellerName = parent.querySelector('.order-seller').innerText;
+                        applyVisualBan(sellerName);
+                    } else {
+                        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                        timer.innerText = `Προθεσμία: ${days}ημ ${hours}ώ ${minutes}λ πριν το BAN`;
+                    }
+                });
+            }, 1000);
+        }
+
+        function applyVisualBan(sellerName) {
+            if(sellerName === "@georgezachari") {
+                const card = document.getElementById('seller-gz');
+                if(card) {
+                    card.style.border = "2px solid var(--alert-red)";
+                    card.querySelector('.seller-info p').innerText = "❌ PERMANENTLY BANNED (Καθυστέρηση Παράδοσης)";
+                    card.querySelector('.seller-info p').style.color = "var(--alert-red)";
+                    card.querySelector('.seller-avatar').style.borderColor = "var(--alert-red)";
+                }
+            }
+        }
+
+        function filterAssets() {
+            const input = document.getElementById('searchBar').value.toLowerCase();
+            const cards = document.getElementsByClassName('product-card');
+            for (let i = 0; i < cards.length; i++) {
+                const title = cards[i].querySelector('.product-title').innerText.toLowerCase();
+                if (title.includes(input)) cards[i].style.display = "flex";
+                else cards[i].style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
