@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broriginal Tech Shop</title>
+    <style>
+        /* Legacy styling compatible with old IE and modern Chrome alike */
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background-color: #0b0f19;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+        h1 { 
+            font-size: 40px; 
+            letter-spacing: -1px;
+            margin-bottom: 5px; 
+            color: #f8fafc;
+        }
+        .brand-accent {
+            color: #10b981; /* Neon green */
+        }
+        .subtitle { color: #64748b; font-size: 15px; font-weight: bold; }
+        
+        /* Universal Layout System for broad browser compatibility */
+        .catalog-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: block;
+            clear: both;
+        }
+        .product-card {
+            background: #171e2e;
+            border: 1px solid #232d42;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .product-tag {
+            background: #064e3b;
+            color: #a7f3d0;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .product-name { font-size: 20px; font-weight: bold; margin-bottom: 8px; }
+        .product-desc { color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
+        
+        .price-box { font-size: 22px; font-weight: bold; color: #f8fafc; display: inline-block; }
+        .buy-btn {
+            background: #10b981;
+            color: #052e16;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            float: right;
+        }
+
+        /* Floating Bottom Cart */
+        .cart-status {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #065f46;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            border: 1px solid #10b981;
+            z-index: 9999;
+        }
+        .cart-span { margin-right: 20px; }
+        
+        .checkout-btn {
+            background: #f8fafc; 
+            color: #065f46; 
+            border: none; 
+            padding: 6px 14px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-section">
+    <h1>BR<span class="brand-accent">ORIGINAL</span></h1>
+    <div class="subtitle">Verified Electronics & Smart Systems • ACS Shipping for Strangers</div>
+</div>
+
+<div class="catalog-container">
+    <!-- Product 1 -->
+    <div class="product-card">
+        <span class="product-tag">Hardware</span>
+        <div class="product-name">Upgraded Laptop Bundle</div>
+        <div class="product-desc">Core i5, 16GB RAM, high-speed SSD. Pre-flashed with a perfectly clean OS build.</div>
+        <div>
+            <span class="price-box">180€</span>
+            <button class="buy-btn" onclick="addToCart(180)">Add to Cart</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+        <span class="product-tag">Storage</span>
+        <div class="product-name">Bootable OS USB Stick</div>
+        <div class="product-desc">Official system setup environment flash drive. Skip the activation code screen easily.</div>
+        <div>
+            <span class="price-box">12€</span>
+            <button class="buy-btn" onclick="addToCart(12)">Add to Cart</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card">
+        <span class="product-tag">Gear</span>
+        <div class="product-name">Universal Console Remote</div>
+        <div class="product-desc">Multi-mode hardware pairing controller, fully tested and cleaned by our bench.</div>
+        <div>
+            <span class="price-box">15€</span>
+            <button class="buy-btn" onclick="addToCart(15)">Add to Cart</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>
+
+<!-- Floating Action Bar -->
+<div class="cart-status">
+    <span class="cart-span">Items: <span id="itemCount">0</span></span>
+    <span class="cart-span">Total: <span id="cartTotal">0€</span></span>
+    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+    /* Old-school variables globally readable by all browser rendering engines */
+    var totalCash = 0;
+    var totalItems = 0;
+
+    function addToCart(price) {
+        totalItems = totalItems + 1;
+        totalCash = totalCash + price;
+        
+        document.getElementById('itemCount').innerHTML = totalItems;
+        document.getElementById('cartTotal').innerHTML = totalCash + "€";
+    }
+
+    function checkout() {
+        if (totalItems === 0) {
+            alert("Your cart is empty! Add an item first.");
+        } else {
+            alert("BRORIGINAL TECH SHOP\n---------------------\nTotal Items: " + totalItems + "\nTotal Amount: " + totalCash + "€\n\nOrder Confirmed! We will arrange ACS Shipping for strangers or House Drop-off for friends.");
+        }
+    }
+</script>
+
+</body>
+</html>
