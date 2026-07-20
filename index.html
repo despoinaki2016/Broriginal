@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRORIGINAL | Real ACS Asset Hub</title>
+    <title>Broriginal | Advanced Combat System Assets</title>
     <style>
         :root {
             --bg-dark: #0b0f12;
@@ -13,7 +13,6 @@
             --text-muted: #64748b;
             --border-color: #1e293b;
             --success-green: #00cc66;
-            --alert-red: #ff3333;
         }
 
         * {
@@ -87,12 +86,24 @@
             padding-left: 10px;
         }
 
+        /* --- LAYOUT COLUMNS --- */
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .shop-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* --- PRODUCTS --- */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .product-card {
@@ -108,7 +119,7 @@
         .product-img-container {
             position: relative;
             width: 100%;
-            height: 200px;
+            height: 180px;
             background-color: #1a232c;
         }
 
@@ -149,20 +160,73 @@
             font-size: 1.1rem;
         }
 
-        .buy-btn {
-            background-color: var(--success-green);
+        .select-btn {
+            background-color: var(--acs-blue);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
-            text-decoration: none;
-            text-align: center;
             transition: background 0.2s;
         }
 
-        .buy-btn:hover {
+        .select-btn:hover {
+            background-color: #0066cc;
+        }
+
+        /* --- CHECKOUT FORM --- */
+        .checkout-panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--acs-blue);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background-color: var(--success-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .checkout-btn:hover {
             background-color: #00b359;
         }
     </style>
@@ -172,39 +236,80 @@
     <div class="container">
         <!-- NAVBAR -->
         <nav>
-            <a href="#" class="logo">BRORIGINAL</a>
+            <a href="#" class="logo">Broriginal</a>
             <div class="search-container">
                 <input type="text" class="search-bar" id="searchBar" onkeyup="filterAssets()" placeholder="Αναζήτηση συστημάτων...">
             </div>
         </nav>
 
-        <!-- PRODUCTS SECTION -->
-        <h2 class="section-title">Διαθέσιμα Συστήματα (ACS)</h2>
-        <div class="products-grid" id="productsGrid">
-            
-            <!-- PRODUCT 1 -->
-            <div class="product-card">
-                <div class="product-img-container">
-                    <!-- Replace this URL with your actual proof screenshot uploaded to GitHub -->
-                    <img src="heavy-rifle-proof.png" alt="Custom ACS Heavy Rifle Config Visual Proof" onerror="this.src='https://images.unsplash.com/photo-1614680376593-902f74fa0d41?w=500'">
-                </div>
-                <div class="product-details">
-                    <div>
-                        <h3 class="product-title">Custom ACS Heavy Rifle Config</h3>
-                        <p class="product-desc">Σύστημα ρεαλιστικής ανάκρουσης, custom UI και εξελιγμένο σύστημα σκόπευσης. Περιλαμβάνει προστασία whitelist.</p>
+        <div class="shop-layout">
+            <!-- LEFT COLUMN: PRODUCTS -->
+            <div>
+                <h2 class="section-title">Διαθέσιμα Συστήματα (ACS)</h2>
+                <div class="products-grid" id="productsGrid">
+                    
+                    <div class="product-card">
+                        <div class="product-img-container">
+                            <img src="heavy-rifle-proof.png" alt="Custom ACS Heavy Rifle Config Visual Proof" onerror="this.src='https://images.unsplash.com/photo-1614680376593-902f74fa0d41?w=500'">
+                        </div>
+                        <div class="product-details">
+                            <div>
+                                <h3 class="product-title">Custom ACS Heavy Rifle Config</h3>
+                                <p class="product-desc">Σύστημα ρεαλιστικής ανάκρουσης, custom UI και εξελιγμένο σύστημα σκόπευσης.</p>
+                            </div>
+                            <div class="product-meta">
+                                <span class="price">10.00 €</span>
+                                <button class="select-btn" onclick="selectItem('Custom ACS Heavy Rifle Config')">Επιλογή</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="product-meta">
-                        <span class="price">10.00 €</span>
-                        <!-- Replace the href string below with your real Stripe Payment Link -->
-                        <a href="https://buy.stripe.com/test_your_actual_link_here" target="_blank" class="buy-btn">Αγορά μέσω Stripe</a>
-                    </div>
+
                 </div>
             </div>
 
+            <!-- RIGHT COLUMN: BILLING FORM -->
+            <div>
+                <h2 class="section-title">Στοιχεία Αγοράς</h2>
+                <div class="checkout-panel">
+                    <form id="purchaseForm" onsubmit="handleCheckout(event)">
+                        <div class="form-group">
+                            <label for="assetName">Επιλεγμένο Προϊόν</label>
+                            <input type="text" id="assetName" readonly placeholder="Πατήστε Επιλογή σε ένα προϊόν">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">Όνομα</label>
+                            <input type="text" id="firstName" required placeholder="Εισάγετε το όνομά σας">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Επίθετο</label>
+                            <input type="text" id="lastName" required placeholder="Εισάγετε το επίθετό σας">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Διεύθυνση Αποστολής / Κατοικίας</label>
+                            <input type="text" id="address" required placeholder="Οδός, Αριθμός, Πόλη, Τ.Κ.">
+                        </div>
+                        <button type="submit" class="checkout-btn">Επιβεβαίωση Αγοράς</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        function selectItem(name) {
+            document.getElementById('assetName').value = name;
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            const asset = document.getElementById('assetName').value;
+            if(!asset) {
+                alert('Παρακαλώ επιλέξτε ένα προϊόν πρώτα!');
+                return;
+            }
+            alert('Η παραγγελία σας για το "' + asset + '" καταχωρήθηκε επιτυχώς!');
+        }
+
         function filterAssets() {
             const input = document.getElementById('searchBar').value.toLowerCase();
             const cards = document.getElementsByClassName('product-card');
