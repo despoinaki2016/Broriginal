@@ -27,6 +27,9 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             padding: 20px;
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 60px; /* Space for the footer status */
         }
 
         .container {
@@ -179,7 +182,7 @@
         .product-title { font-size: 1.1rem; margin-bottom: 5px; }
         .product-price { color: var(--acs-blue); font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; }
 
-        /* --- MODAL FOR SELLING & BILLING --- */
+        /* --- DYNAMIC CONTROL PANELS --- */
         .panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
@@ -190,13 +193,41 @@
 
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 6px; color: var(--text-muted); }
-        .form-group input, .form-group textarea {
+        .form-group input {
             width: 100%; background-color: var(--bg-dark); border: 1px solid var(--border-color);
             border-radius: 4px; padding: 10px; color: var(--text-main); font-size: 0.95rem;
         }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--acs-blue); }
+        .form-group input:focus { outline: none; border-color: var(--acs-blue); }
 
         .hidden { display: none !important; }
+
+        /* --- BOTTOM RIGHT ENGINE STATUS --- */
+        .engine-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--acs-blue);
+            box-shadow: 0 0 8px var(--acs-blue);
+        }
     </style>
 </head>
 <body>
@@ -225,13 +256,13 @@
             <div>
                 <h2 class="section-title">Αγορά (Marketplace)</h2>
                 <div class="products-grid" id="productsGrid">
-                    <!-- Dynamic Items will be loaded here via JS -->
+                    <!-- Dynamic Items loaded via JS -->
                 </div>
             </div>
 
             <!-- RIGHT COLUMN: DYNAMIC CONTROL PANELS -->
             <div>
-                <!-- FORM 1: SELL AN ITEM (Hidden until user logs in and clicks Sell) -->
+                <!-- FORM 1: SELL AN ITEM -->
                 <div class="panel hidden" id="sellPanel">
                     <h3 class="section-title" style="border-color: var(--success-green)">Ανάρτηση Προϊόντος</h3>
                     <form id="sellForm" onsubmit="createListing(event)">
@@ -278,20 +309,24 @@
         </div>
     </div>
 
+    <!-- FIXED STATUS BOTTOM RIGHT -->
+    <div class="engine-status">
+        <span class="status-dot"></span>
+        Using ACS
+    </div>
+
     <script>
-        // Default seed items if LocalStorage is empty
         const defaultItems = [
             { title: "Gaming Laptop RTX 4060", price: "899.00", img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500" },
             { title: "Ασύρματα Ακουστικά ANC", price: "59.99", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" }
         ];
 
-        // Load items from local storage or set defaults
         let marketplaceItems = JSON.parse(localStorage.getItem('broriginal_products')) || defaultItems;
 
         function renderItems() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
-            marketplaceItems.forEach((item, index) => {
+            marketplaceItems.forEach((item) => {
                 grid.innerHTML += `
                     <div class="product-card">
                         <div class="product-img-container">
@@ -309,7 +344,6 @@
             });
         }
 
-        // Live Search Engine
         function filterItems() {
             const query = document.getElementById('searchBar').value.toLowerCase();
             const cards = document.getElementsByClassName('product-card');
@@ -319,7 +353,6 @@
             }
         }
 
-        // Simulated Google Login Authentication
         function simulateLogin() {
             document.getElementById('loginBtn').classList.add('hidden');
             document.getElementById('userProfile').style.display = 'flex';
@@ -331,7 +364,6 @@
             document.getElementById('sellPanel').classList.toggle('hidden');
         }
 
-        // Add user-submitted item to the inventory array and database
         function createListing(e) {
             e.preventDefault();
             const title = document.getElementById('newTitle').value;
@@ -357,7 +389,6 @@
             alert('Η παραγγελία σας για το προϊόν "' + item + '" ολοκληρώθηκε!');
         }
 
-        // Run on page initialization
         renderItems();
     </script>
 </body>
