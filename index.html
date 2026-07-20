@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Broriginal | Advanced Combat System Assets</title>
+    <title>Broriginal | Real-Life Marketplace</title>
     <style>
         :root {
             --bg-dark: #0b0f12;
@@ -13,13 +13,14 @@
             --text-muted: #64748b;
             --border-color: #1e293b;
             --success-green: #00cc66;
+            --alert-red: #ff3333;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
@@ -40,25 +41,24 @@
             align-items: center;
             padding: 20px 0;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 20px;
         }
 
         .logo {
             color: var(--acs-blue);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 900;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             text-decoration: none;
-            text-shadow: 0 0 10px rgba(0, 136, 255, 0.3);
         }
 
         .search-container {
             position: relative;
             flex-grow: 1;
-            max-width: 500px;
+            max-width: 400px;
         }
 
         .search-bar {
@@ -76,14 +76,47 @@
             border-color: var(--acs-blue);
         }
 
-        .section-title {
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            color: var(--text-main);
-            border-left: 3px solid var(--acs-blue);
-            padding-left: 10px;
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-blue { background-color: var(--acs-blue); color: white; }
+        .btn-blue:hover { background-color: #0066cc; }
+        .btn-green { background-color: var(--success-green); color: white; }
+        .btn-green:hover { background-color: #00b359; }
+
+        .google-btn {
+            background-color: white;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .google-btn:hover { background-color: #e6e6e6; }
+
+        .user-profile {
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--acs-blue);
         }
 
         /* --- LAYOUT COLUMNS --- */
@@ -94,15 +127,22 @@
         }
 
         @media (max-width: 900px) {
-            .shop-layout {
-                grid-template-columns: 1fr;
-            }
+            .shop-layout { grid-template-columns: 1fr; }
         }
 
-        /* --- PRODUCTS --- */
+        .section-title {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--acs-blue);
+            padding-left: 10px;
+        }
+
+        /* --- PRODUCTS GRID --- */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px;
         }
 
@@ -117,9 +157,8 @@
         }
 
         .product-img-container {
-            position: relative;
             width: 100%;
-            height: 180px;
+            height: 200px;
             background-color: #1a232c;
         }
 
@@ -130,105 +169,34 @@
         }
 
         .product-details {
-            padding: 20px;
+            padding: 15px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .product-title {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
+        .product-title { font-size: 1.1rem; margin-bottom: 5px; }
+        .product-price { color: var(--acs-blue); font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; }
 
-        .product-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-
-        .product-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .price {
-            color: var(--acs-blue);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .select-btn {
-            background-color: var(--acs-blue);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .select-btn:hover {
-            background-color: #0066cc;
-        }
-
-        /* --- CHECKOUT FORM --- */
-        .checkout-panel {
+        /* --- MODAL FOR SELLING & BILLING --- */
+        .panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 25px;
-            height: fit-content;
+            padding: 20px;
+            margin-bottom: 25px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 6px; color: var(--text-muted); }
+        .form-group input, .form-group textarea {
+            width: 100%; background-color: var(--bg-dark); border: 1px solid var(--border-color);
+            border-radius: 4px; padding: 10px; color: var(--text-main); font-size: 0.95rem;
         }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--acs-blue); }
 
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
-
-        .form-group input {
-            width: 100%;
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 10px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--acs-blue);
-        }
-
-        .checkout-btn {
-            width: 100%;
-            background-color: var(--success-green);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-
-        .checkout-btn:hover {
-            background-color: #00b359;
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -238,57 +206,72 @@
         <nav>
             <a href="#" class="logo">Broriginal</a>
             <div class="search-container">
-                <input type="text" class="search-bar" id="searchBar" onkeyup="filterAssets()" placeholder="Αναζήτηση συστημάτων...">
+                <input type="text" class="search-bar" id="searchBar" onkeyup="filterItems()" placeholder="Αναζήτηση προϊόντων...">
+            </div>
+            <div class="nav-actions">
+                <button class="btn google-btn" id="loginBtn" onclick="simulateLogin()">
+                    <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" width="18" alt="Google"> Sign in
+                </button>
+                <div class="user-profile" id="userProfile">
+                    <div class="avatar"></div>
+                    <span id="userName">User</span>
+                </div>
+                <button class="btn btn-blue hidden" id="sellNavBtn" onclick="toggleSellForm()">Πώληση</button>
             </div>
         </nav>
 
         <div class="shop-layout">
-            <!-- LEFT COLUMN: PRODUCTS -->
+            <!-- LEFT COLUMN: MARKETPLACE ITEMS -->
             <div>
-                <h2 class="section-title">Διαθέσιμα Συστήματα (ACS)</h2>
+                <h2 class="section-title">Αγορά (Marketplace)</h2>
                 <div class="products-grid" id="productsGrid">
-                    
-                    <div class="product-card">
-                        <div class="product-img-container">
-                            <img src="heavy-rifle-proof.png" alt="Custom ACS Heavy Rifle Config Visual Proof" onerror="this.src='https://images.unsplash.com/photo-1614680376593-902f74fa0d41?w=500'">
-                        </div>
-                        <div class="product-details">
-                            <div>
-                                <h3 class="product-title">Custom ACS Heavy Rifle Config</h3>
-                                <p class="product-desc">Σύστημα ρεαλιστικής ανάκρουσης, custom UI και εξελιγμένο σύστημα σκόπευσης.</p>
-                            </div>
-                            <div class="product-meta">
-                                <span class="price">10.00 €</span>
-                                <button class="select-btn" onclick="selectItem('Custom ACS Heavy Rifle Config')">Επιλογή</button>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!-- Dynamic Items will be loaded here via JS -->
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: BILLING FORM -->
+            <!-- RIGHT COLUMN: DYNAMIC CONTROL PANELS -->
             <div>
-                <h2 class="section-title">Στοιχεία Αγοράς</h2>
-                <div class="checkout-panel">
+                <!-- FORM 1: SELL AN ITEM (Hidden until user logs in and clicks Sell) -->
+                <div class="panel hidden" id="sellPanel">
+                    <h3 class="section-title" style="border-color: var(--success-green)">Ανάρτηση Προϊόντος</h3>
+                    <form id="sellForm" onsubmit="createListing(event)">
+                        <div class="form-group">
+                            <label>Όνομα Προϊόντος</label>
+                            <input type="text" id="newTitle" required placeholder="π.χ. iPhone 13 Pro">
+                        </div>
+                        <div class="form-group">
+                            <label>Τιμή (€)</label>
+                            <input type="number" id="newPrice" step="0.01" required placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Σύνδεσμος Εικόνας (URL)</label>
+                            <input type="url" id="newImg" placeholder="Αφήστε κενό για προεπιλογή">
+                        </div>
+                        <button type="submit" class="btn btn-green" style="width: 100%;">Δημοσίευση τώρα</button>
+                    </form>
+                </div>
+
+                <!-- FORM 2: BUYING CHECKOUT FORM -->
+                <div class="panel">
+                    <h3 class="section-title">Στοιχεία Αγοράς</h3>
                     <form id="purchaseForm" onsubmit="handleCheckout(event)">
                         <div class="form-group">
-                            <label for="assetName">Επιλεγμένο Προϊόν</label>
-                            <input type="text" id="assetName" readonly placeholder="Πατήστε Επιλογή σε ένα προϊόν">
+                            <label>Επιλεγμένο Αντικείμενο</label>
+                            <input type="text" id="checkoutAsset" readonly placeholder="Επιλέξτε ένα προϊόν από αριστερά">
                         </div>
                         <div class="form-group">
-                            <label for="firstName">Όνομα</label>
-                            <input type="text" id="firstName" required placeholder="Εισάγετε το όνομά σας">
+                            <label>Όνομα</label>
+                            <input type="text" required placeholder="Το όνομά σας">
                         </div>
                         <div class="form-group">
-                            <label for="lastName">Επίθετο</label>
-                            <input type="text" id="lastName" required placeholder="Εισάγετε το επίθετό σας">
+                            <label>Επίθετο</label>
+                            <input type="text" required placeholder="Το επίθετό σας">
                         </div>
                         <div class="form-group">
-                            <label for="address">Διεύθυνση Αποστολής / Κατοικίας</label>
-                            <input type="text" id="address" required placeholder="Οδός, Αριθμός, Πόλη, Τ.Κ.">
+                            <label>Διεύθυνση Αποστολής</label>
+                            <input type="text" required placeholder="Οδός, Πόλη, Τ.Κ.">
                         </div>
-                        <button type="submit" class="checkout-btn">Επιβεβαίωση Αγοράς</button>
+                        <button type="submit" class="btn btn-green" style="width:100%;">Επιβεβαίωση Αγοράς</button>
                     </form>
                 </div>
             </div>
@@ -296,29 +279,86 @@
     </div>
 
     <script>
+        // Default seed items if LocalStorage is empty
+        const defaultItems = [
+            { title: "Gaming Laptop RTX 4060", price: "899.00", img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500" },
+            { title: "Ασύρματα Ακουστικά ANC", price: "59.99", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" }
+        ];
+
+        // Load items from local storage or set defaults
+        let marketplaceItems = JSON.parse(localStorage.getItem('broriginal_products')) || defaultItems;
+
+        function renderItems() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            marketplaceItems.forEach((item, index) => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-img-container">
+                            <img src="${item.img || 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500'}" alt="${item.title}">
+                        </div>
+                        <div class="product-details">
+                            <div>
+                                <h3 class="product-title">${item.title}</h3>
+                                <p class="product-price">${item.price} €</p>
+                            </div>
+                            <button class="btn btn-blue" onclick="selectItem('${item.title}')">Επιλογή</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Live Search Engine
+        function filterItems() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const cards = document.getElementsByClassName('product-card');
+            for (let card of cards) {
+                const title = card.querySelector('.product-title').innerText.toLowerCase();
+                card.style.display = title.includes(query) ? "flex" : "none";
+            }
+        }
+
+        // Simulated Google Login Authentication
+        function simulateLogin() {
+            document.getElementById('loginBtn').classList.add('hidden');
+            document.getElementById('userProfile').style.display = 'flex';
+            document.getElementById('sellNavBtn').classList.remove('hidden');
+            document.getElementById('userName').innerText = "Despoina";
+        }
+
+        function toggleSellForm() {
+            document.getElementById('sellPanel').classList.toggle('hidden');
+        }
+
+        // Add user-submitted item to the inventory array and database
+        function createListing(e) {
+            e.preventDefault();
+            const title = document.getElementById('newTitle').value;
+            const price = parseFloat(document.getElementById('newPrice').value).toFixed(2);
+            const img = document.getElementById('newImg').value;
+
+            marketplaceItems.unshift({ title, price, img });
+            localStorage.setItem('broriginal_products', JSON.stringify(marketplaceItems));
+            
+            renderItems();
+            document.getElementById('sellForm').reset();
+            toggleSellForm();
+        }
+
         function selectItem(name) {
-            document.getElementById('assetName').value = name;
+            document.getElementById('checkoutAsset').value = name;
         }
 
         function handleCheckout(e) {
             e.preventDefault();
-            const asset = document.getElementById('assetName').value;
-            if(!asset) {
-                alert('Παρακαλώ επιλέξτε ένα προϊόν πρώτα!');
-                return;
-            }
-            alert('Η παραγγελία σας για το "' + asset + '" καταχωρήθηκε επιτυχώς!');
+            const item = document.getElementById('checkoutAsset').value;
+            if(!item) return alert('Παρακαλώ επιλέξτε ένα προϊόν από την αγορά!');
+            alert('Η παραγγελία σας για το προϊόν "' + item + '" ολοκληρώθηκε!');
         }
 
-        function filterAssets() {
-            const input = document.getElementById('searchBar').value.toLowerCase();
-            const cards = document.getElementsByClassName('product-card');
-            for (let i = 0; i < cards.length; i++) {
-                const title = cards[i].querySelector('.product-title').innerText.toLowerCase();
-                if (title.includes(input)) cards[i].style.display = "flex";
-                else cards[i].style.display = "none";
-            }
-        }
+        // Run on page initialization
+        renderItems();
     </script>
 </body>
 </html>
